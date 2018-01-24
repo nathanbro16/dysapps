@@ -1,0 +1,33 @@
+.navbar-dark.navbar-brand{	
+	
+}
+.container.form-control{
+	margin: 50px auto;
+	overflow: hidden;
+}
+.img-thumbnail{
+	margin:auto;
+	width: 60%;
+
+}
+#article {
+    padding-top: 30px;
+    vertical-align: all;
+}
+.container .marker
+{
+	background-color: Yellow;
+}
+.body {
+	background: url(../../../images/font2.jpg);
+	background-position: center;
+}
+#bamin1:hover {background-color: #fff}
+
+#bamin1:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+	
+

@@ -1,0 +1,28 @@
+body {
+	margin: 0 auto;
+	background:url(/images/font1.jpg);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.container {
+	background: rgba(15,15,88,0.7);
+	background-image: none;
+	background-repeat: repeat;
+	font-family: sans-serif;
+	height: 400px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	width: auto;
+	text-align: center;
+}
+input[type="button"]{
+	padding: 15px 25px;
+	background: #0099ff;
+	color: #fff;
+	border: none;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
