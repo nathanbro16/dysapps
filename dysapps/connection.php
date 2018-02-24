@@ -1,16 +1,23 @@
 <?php
 session_start();
+
+if (!empty($_SESSION['pseudo']) and !empty($_SESSION['urlpseudo']) and !empty($_SESSION['id'])) {
+	$chaine = trim($_SESSION['pseudo']);
+	$chaine = str_replace(" ", "_", $chaine);
+	header("Location: user-".$chaine);
+}
 ?>
 <html>
 <head>
-		<link rel="stylesheet" type="text/css" href="library/bootstrap-4.0.0-beta/scss/css/bootstrap.min.css">
+		<link rel="icon" type="image/x-icon" href="icon"/>
+		<link rel="stylesheet" type="text/css" href="library\css\bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="library\font-awesome-4.7.0\css\font-awesome.min.css">
+        <link rel="stylesheet" href="library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
 
-        <title>collège</title>
+        <title>Dysapps</title>
     <meta charset="utf-8">
 </head>
-<body style="background: url(/images/font2.jpg); background-position: center;">
+<body>
 	<div class="container">
 		<form method="POST" action="connect.php" class="form-signin">
             <div class="row justify-content-md-center">
@@ -20,11 +27,15 @@ session_start();
             
             <div class="row">
                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+                    <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    </div>
                         <input id="" class="form-control" placeholder="Pseudo" name="pseudoconnect" type="text">
                 </div>
                 <div class="input-group">
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                    <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-key"></i></span>
+                    </div>
         	           <input id="inputPassword" class="form-control" name="mdpconnect" placeholder="Mot de passe" type="password">
                 </div>
             </div>

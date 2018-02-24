@@ -5,19 +5,16 @@ if (isset($_POST['valid1'])) {
 	if (!empty($_POST['typeid'])) {
 		$typeid = $_POST['typeid'];
 		if ($typeid == '1') {
-			echo "1";
-			echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-2');</script>";
+			echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-2');</script>";
 			$_SESSION['ajout-typeid'] = '1';
 			exit();
 		} elseif ($typeid == '2') {
-			echo "2";
-			echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-2');</script>";
+			echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-2');</script>";
 			$_SESSION['ajout-typeid'] = '2';
 			//exit();
 		} elseif ($typeid == '3') {
-			echo "3";
 			$_SESSION['ajout-typeid'] = '3';
-			echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-2');</script>";
+			echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-2');</script>";
 			exit();
 		} else { echo " ceci n'est pas une option valide";}
 	} else {
@@ -30,12 +27,12 @@ if (isset($_POST['valid1'])) {
 	if (!empty($_POST['Objet'])) {
 		$Objet = htmlspecialchars($_POST['Objet']);
 		$_SESSION['ajout-object'] = $Objet;
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-3');</script>";
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-3');</script>";
 
 	} elseif ($_POST['choixmatiere'] != 'defaut') {
 		$Objet = htmlspecialchars($_POST['choixmatiere']);
 		$_SESSION['ajout-object'] = $Objet;
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-3');</script>";
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-3');</script>";
 
 	} else {
 
@@ -49,7 +46,7 @@ if (isset($_POST['valid1'])) {
 	if (!empty($_POST['datepicker'])) {
 		if (preg_match("#([0-9]+)-([0-1][0-9])-([0-3][0-9])#", $_POST['datepicker'])) {
 			$_SESSION['ajout-datepicker'] = $_POST['datepicker'];
-			echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-4');</script>";
+			echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-4');</script>";
 		} else {
 			$ereur = '2';
 			echo "ereur sur le format de la date (aaaa-mm-jj)";
@@ -67,49 +64,31 @@ if (isset($_POST['valid1'])) {
 		$jour = $_SESSION['ajout-datepicker'];
 		$matiere = $_SESSION['ajout-object'];
 		$pseudo = $_SESSION['pseudo'];
-		session_destroy();
-		session_start();
-		$_SESSION['id'] = $iduser;
-		$_SESSION['pseudo'] = $pseudo; 
+		unset($_SESSION['ajout-typeid'], $_POST['tache'], $_SESSION['ajout-datepicker'], $_SESSION['ajout-object']);
 
-		$insert=$bdd->prepare("INSERT INTO agendat(matiere, jour, tache, iduser, typeid) VALUES(?, ?, ?, ?, ?) ");
+		$insert=$bdd->prepare("INSERT INTO ".DB_prefix."agendat(matiere, jour, tache, iduser, typeid) VALUES(?, ?, ?, ?, ?) ");
 		$insert->execute(array($matiere,$jour,$tache,$iduser,$typeid));
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser');</script>";
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser');</script>";
 	} else {
 		$ereur = '1';
 	}
 
 } elseif (isset($_POST['annule'])) {
 	if (!empty($_SESSION['ajout-datepicker'])) {
-		$iduser = $_SESSION['id'];
-		$pseudo = $_SESSION['pseudo'];
-		session_destroy();
-		session_start();
-		$_SESSION['id'] = $iduser;
-		$_SESSION['pseudo'] = $pseudo;
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser');</script>";
+		unset($_SESSION['ajout-typeid'], $_POST['tache'], $_SESSION['ajout-datepicker']);
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser');</script>";
 
 	} elseif (!empty($_SESSION['ajout-object'])) {
-		$iduser = $_SESSION['id'];
-		$pseudo = $_SESSION['pseudo'];
-		session_destroy();
-		session_start();
-		$_SESSION['id'] = $iduser;
-		$_SESSION['pseudo'] = $pseudo;
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser');</script>";
+		unset($_SESSION['ajout-typeid'], $_POST['tache']);
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser');</script>";
 
 	} elseif (!empty($_SESSION['ajout-typeid'])) {
-		$iduser = $_SESSION['id'];
-		$pseudo = $_SESSION['pseudo'];
-		session_destroy();
-		session_start();
-		$_SESSION['id'] = $iduser;
-		$_SESSION['pseudo'] = $pseudo;
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser');</script>";
+		unset($_SESSION['ajout-typeid']);
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser');</script>";
 
 	} else {
 
-		echo "<script type='text/javascript'>document.location.replace('agendat-$iduser');</script>";
+		echo "<script type='text/javascript'>document.location.replace('agenda-$iduser');</script>";
 
 	}
 
@@ -122,13 +101,13 @@ if (isset($_POST['valid1'])) {
 
 		case '0':
 				if (!empty($_SESSION['ajout-datepicker'])) {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-4');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-4');</script>";
 				} elseif (!empty($_SESSION['ajout-object'])) {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-3');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-3');</script>";
 				} elseif (!empty($_SESSION['ajout-typeid'])) {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-2');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-2');</script>";
 				} else {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-1');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-1');</script>";
 				}
 			break;
 		case '1':
@@ -179,18 +158,15 @@ if (isset($_POST['valid1'])) {
 										<div class="custom-controls-stacked">
 										  <label class="custom-control custom-radio">
 										    <input id="radioStacked1" value="2" name="typeid" type="radio" class="custom-control-input">
-										    <span class="custom-control-indicator"></span>
-										    <span class="custom-control-description">Devoir</span>
+										    <span class="custom-control-label">Devoir</span>
 										  </label>
 										  <label class="custom-control custom-radio">
 										    <input id="radioStacked2" name="typeid" value="1" type="radio" class="custom-control-input">
-										    <span class="custom-control-indicator"></span>
-										    <span class="custom-control-description">Evaluation</span>
+										    <span class="custom-control-label">Evaluation</span>
 										  </label>
 										  <label class="custom-control custom-radio">
 										    <input id="radioStacked3" name="typeid" value="3" type="radio" class="custom-control-input">
-										    <span class="custom-control-indicator"></span>
-										    <span class="custom-control-description">Note</span>
+										    <span class="custom-control-label">Note</span>
 										  </label>
 										</div>
 										<?php
@@ -252,24 +228,20 @@ if (isset($_POST['valid1'])) {
 							  		if (!empty($ereur)) {
 							  		echo 'class="text-danger"'; 
 							  		}
-							  		?> >De quoi s'agit t'il ?</h5>
+							  		?> >De quoi s'agit t'il ?</h5>										      
 									<div class="form-row justify-content-center">
-										<select name="choixmatiere" class="custom-select d-block col-5" >
-											<option value="defaut" id="defaut">matière</option>
-											<?php
-											$reponse = $bdd->query('SELECT * FROM matiere ORDER BY matiere');
-											// On affiche chaque entrée une à une
-											while ($donnees = $reponse->fetch())
-											{
-											?>
-											<option value=<?= $donnees['matiere'] ?>><?= $donnees['matiere'] ?></option>
-											<?php
-											}
-											$reponse->closeCursor();
-											?>
-										</select>
-										<h3 class="col-auto">ou</h3>
-										<input type="text" name="Objet" class="form-control col-5" placeholder="Objet">
+										<input type="text" class="form-control col-4 auto-complete" id="matiere" name="Objet" placeholder="Objet">
+
+										  <script>
+										  jQuery( function() {
+										    jQuery( "#matiere" ).autocomplete({
+										      source: "agendat/autocomplete.php",
+										      minLength: 1
+										      
+
+										    });
+										  } );
+										  </script>
 									</div><br>
 									<?php
 									if (!empty($ereur) and $ereur == '1') {
@@ -288,7 +260,7 @@ if (isset($_POST['valid1'])) {
 					</div>
 				<?php
 				} else {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-1');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-1');</script>";
 				}
 			break;
 		case '3':
@@ -337,8 +309,10 @@ if (isset($_POST['valid1'])) {
 								<footer class="blockquote-footer">Attention il ne seront supprimer que par vous.</footer>
 								<div>
 									<div class="input-group">
-										<input id="datepicker1" class="input-group-addon" name="datepicker">
-										<label class="input-group-addon" for="datepicker1"><i class="fa fa-calendar"></i></label>
+										<input id="datepicker1" class="input-group-text col-3" data="ca" name="datepicker">
+										<div class="input-group-prepend">
+											<label class="input-group-text" data="ca" for="datepicker1"><i class="fa fa-calendar"></i></label>
+										</div>
 									</div>
 								</div><br>
 								<?php
@@ -361,7 +335,7 @@ if (isset($_POST['valid1'])) {
 
 					<?php
 				} else {
-					echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-2');</script>";
+					echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-2');</script>";
 				}
 			break;
 		case '4':
@@ -436,7 +410,7 @@ if (isset($_POST['valid1'])) {
 						</div>
 					  <?php
 
-					} else {echo "<script type='text/javascript'>document.location.replace('agendat-$iduser=ajout-3');</script>";}
+					} else {echo "<script type='text/javascript'>document.location.replace('agenda-$iduser=ajout-3');</script>";}
 			break;
 	}
 	?>

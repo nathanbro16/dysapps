@@ -1,19 +1,28 @@
+<!DOCTYPE html>
 <html>
 <head>
+	<link rel="icon" type="image/x-icon" href="icon" />
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="library/bootstrap-4.0.0-beta/scss/css/bootstrap.min.css">
-	<link rel="stylesheet" href="library\font-awesome-4.7.0\css\font-awesome.min.css">
+	<link rel="stylesheet" href="library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
+	<style type="text/css">
+		body {
+			background: url(picture/font2.jpg);
+			background-position: center;
+		}
+	</style>
 
-	<title>Vérification des fichiers</title>
+
+	<title>Auto-test</title>
 </head>
 <body>
 	<div class="container">
-		<h2>Vérification de connection </h2>
+		<h2>Vérification de connexion </h2>
 		<br>
-			<div class="row">
+		<div class="row">
 			<?php
 
-			define('OK', '<span class="badge badge-success"> succès !</span><br />');
+			define('OK', '<span class="badge badge-success"> Succès !</span><br />');
 			define('non', '<span class="badge badge-danger"> Erreur !</span><br />');
 			try
 			{
@@ -21,38 +30,39 @@
 			}
 			catch (Exception $e)
 			{
-				?><div class="alert alert-danger col-sm"><?php
-
-					echo 'Connection basse de donner : ' . non ;
-    				die('Erreur : ' . utf8_encode($e->getMessage()));
-    			
-    			?></div>
-    			<div class="col-sm"></div>
+	  				echo '<div class="alert alert-danger">';
+					echo 'Connection base de donner : ' . non ;
+					echo "Erreur :".utf8_encode($e->getMessage());
+					echo "</div>";
+      ?>
+    		<div class="col-sm"></div>
+    	</div>
+    </div>
+</body>
+</html>
     			<?php
+    			die();
 
 			}
 				?><div class="alert alert-success col-sm"><?php
 
-					echo 'Connection basse de donner : ' . OK ;
+					echo 'Connection base de donner : ' . OK ;
 					header('refresh:1;URL=connection');
 				?></div>
-				<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-					<h4><span class="sr-only">Loading...</span></h4>
+					<div class="fa-3x">
+					  <i class="fas fa-sync fa-spin"></i>
+					</div>
 				
 				<div class="col-sm"></div>
-			</div> 
-
+			</div>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col-">
 					<?php
-						echo '<p class="text-info">Redirections en cours veuillez patientez...</p>';
+						echo '<p class="text-info">Redirection en cours veuillez patienter...</p>';
 					?>
+				
 				</div>
-			
-		</div>
-		
+			</div>
 	</div>
-
-
 </body>
 </html>

@@ -9,15 +9,28 @@ if (isset($_POST['formconnextion']))
 		$mdpconnect = sha1($mdpconnectSecure);
 		if (!empty($pseudoconnect) AND ! empty($mdpconnect)) 
 		{
-			$requser = $bdd->prepare("SELECT * FROM membres WHERE pseudo= ? AND motdepasse=? ");
+			$requser = $bdd->prepare("SELECT * FROM ".DB_prefix."membres WHERE pseudo= ? AND motdepasse=? ");
 			$requser->execute(array($pseudoconnect, $mdpconnect));
 			$userexist = $requser->rowCount();
 			if ($userexist == 1) 
 			{
 				$userinfo = $requser->fetch();
-				$_SESSION['id'] = $userinfo['id'];
-				$_SESSION['pseudo'] = $userinfo['pseudo'];
-				header("Location: user/profil-".$_SESSION['id']);
+				$verif = $bdd->prepare("SELECT * FROM ".DB_prefix."membres WHERE pseudo= ?");
+				$verif->execute(array($userinfo['pseudo']));
+				if (substr_count($verif, ' ') <= 10) {
+
+						$chaine = trim($userinfo['pseudo']);
+						$chaine = str_replace(" ", "_", $chaine);
+						$_SESSION['urlpseudo'] = 'true';
+						$_SESSION['id'] = $userinfo['id'];
+						$_SESSION['pseudo'] = $userinfo['pseudo'];
+						header("Location: user-".$chaine);
+				} else {
+					$_SESSION['urlpseudo'] = 'false';
+					$_SESSION['id'] = $userinfo['id'];
+					$_SESSION['pseudo'] = $userinfo['pseudo'];
+					header("Location: user-".$_SESSION['id']);
+				}					
 			}
 			else
 			{

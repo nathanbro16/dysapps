@@ -1,53 +1,44 @@
 <?php
-
-?> 
-
+if ($_SESSION['urlpseudo'] == 'true') {
+	$urlpseudo = $_SESSION['pseudo'];
+  $urlpseudo = str_replace(" ", "_", $urlpseudo);
+} elseif ($_SESSION['urlpseudo'] == 'false') {
+	$urlpseudo = $_SESSION['id'];
+} else {
+	echo "erreur sur variable session 'urlpseudo'.";
+}
+?>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>agendat 2.0</title>
+  <title>agenda</title>
+  <link rel="icon" type="image/x-icon" href="logo1.png" />
+
   <!--css-->
-  <link rel="stylesheet" href="../library/bootstrap-4.0.0-beta/scss/css/bootstrap.min.css">
-  <link href="../library/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../library/css/bootstrap.min.css">
+  <link href="../library/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
   <link href="../library/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="agendat/css/style3.css">
-  <link rel="stylesheet" href="..\library\font-awesome-4.7.0\css\font-awesome.min.css">
+  <link rel="stylesheet" href="..\library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
+  <!--/css-->
   <!--js-->
   <script src="../library/js/jquery-3.2.1.slim.min.js"></script>
   <script type="text/javascript">var jQuery_3_2_1 = $.noConflict();</script>
   <script type="text/javascript" src="../library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
-  <script src="../library/bootstrap-4.0.0-beta/js/js/bootstrap.min.js"></script>
-
+  <script src="../library/js/bootstrap.min.js"></script>
+  <script src="../library/js/date-heure.js"></script>
   <script src="../library/summernote-master/dist/summernote-bs4.js"></script>
   <script src="../library/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
   <script src="../library/jquery-ui-1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript">
-    jQuery.noConflict();
-
-    jQuery( function() {
-      jQuery( "#datepicker1" ).datepicker({
-        altField: "#datepicker",
-        closeText: 'Fermer',
-        prevText: 'Précédent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-        dateFormat: 'yy-mm-dd',
-        firstDay: 1
-      });              
-    });
-  </script>
-      
+  <script src="agendat/datepicker.js"></script>   
+  <!-- /js -->  
 </head>
 <body class="body">
   <div id="progressbar"></div>
 
   <nav class="navbar navbar-expand-lg navbar-dark ">
-    <a class="navbar-brand" href="agendat">Agendat</a>
+    <a class="navbar-brand" href="agenda-<?= $_SESSION['id'] ?>">Agenda</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,54 +46,10 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link btn-outline-primary fa fa-home fa-1x" href="profil-<?= $_SESSION['id'] ?>" style="font-size: 160%" ></a>
+          <a class="nav-link btn-outline-primary fa fa-home" href="../user-<?= $urlpseudo ?>" ></a>
         </li>
         
-        <a href="agendat-<?=$_SESSION['id']?>=ajout-0" class="nav-link btn-outline-success fa fa-plus" style="font-size: 160%"></a>
-
-   <script type="text/javascript">
-    function date_heure(id)
-    {
-      date = new Date;
-      annee = date.getFullYear();
-      moi = date.getMonth();
-      mois = new Array('Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Ao&ucirc;t','Septembre','Octobre','Novembre','D&eacute;cembre');
-      j = date.getDate();
-      jour = date.getDay();
-      jours = new Array('Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi');
-      resultat = ''+jours[jour]+' '+j+' '+mois[moi]+' '+annee;
-      document.getElementById(id).innerHTML = resultat;
-      setTimeout('date_heure("'+id+'");','1000');
-      return true;
-    }
-  </script>
-  <script type="text/javascript">
-    function heure(id)
-    {
-      date = new Date;
-
-      h = date.getHours();
-      if(h<10)
-      {
-        h = "0"+h;
-      }
-      m = date.getMinutes();
-      if(m<10)
-      {
-        m = "0"+m;
-      }
-      s = date.getSeconds();
-      if(s<10)
-      {
-        s = "0"+s;
-      }
-      resultat = ''+h+':'+m+':'+s;
-      document.getElementById(id).innerHTML = resultat;
-      setTimeout('heure("'+id+'");','1000');
-      return true;
-    }
-  </script>
-  
+        <a href="agenda-<?=$_SESSION['id']?>=ajout-0" class="nav-link btn-outline-success fa fa-calendar-plus" style="color: green;"></a>
       </ul>
 
     </div>
@@ -137,16 +84,16 @@ if (isset($ajout)) {
 
             <?php
               $iduser = $_SESSION['id'];
-                            setlocale(LC_TIME, 'fr_FR.UTF8', 'fr_FR.UTF-8', 'fr.UTF8', 'fr.UTF-8', 'fr','utf-8','UTF8');
+                           
               // requete de suppretions
               if (isset($supprimer) > 0)
               {                
                 $suprid = (int) $supprimer;
-                $suppr = $bdd->query("SELECT `iduser` FROM `agendat` WHERE id = $suprid ");
+                $suppr = $bdd->query("SELECT `iduser` FROM `".DB_prefix."agendat` WHERE id = $suprid ");
                 $supprep = $suppr->fetch();
                 $suppr->closeCursor();
                 if ($supprep['iduser'] == $_SESSION['id']) {
-                  $del1 = $bdd->prepare("DELETE FROM agendat WHERE iduser = $iduser AND id = $suprid");
+                  $del1 = $bdd->prepare("DELETE FROM ".DB_prefix."agendat WHERE iduser = $iduser AND id = $suprid");
                   $del1->execute();
                 } else {
                 ?><div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -161,12 +108,12 @@ if (isset($ajout)) {
               }
         ?><div class="row"><?php
               // On récupère tout le contenu de la table
-             
-              $reponse1 = $bdd->query("SELECT * FROM agendat WHERE iduser = $iduser ORDER BY jour");
+              setlocale(LC_TIME, 'fr_FR.UTF8', 'fr_FR.UTF-8', 'fr.UTF8', 'fr.UTF-8', 'fr','utf-8','UTF8');
+              $reponse1 = $bdd->query("SELECT * FROM ".DB_prefix."agendat WHERE iduser = $iduser ORDER BY jour");
               // On affiche chaque entrée une à une
               while ($donnees1 = $reponse1->fetch())
               {
-                  $dateFormat = utf8_encode(ucfirst(strftime('%A %d %B %G',strtotime($donnees1['jour']))));
+                  $dateFormat = ucfirst(strftime('%A %d %B %G',strtotime($donnees1['jour'])));
                   
                   // Definition des variables de style bootstrap et des variable de tache
                   switch ($donnees1['typeid']) {
@@ -200,7 +147,7 @@ if (isset($ajout)) {
                               if (!empty($date)) {
                                 echo $date;
                               } else {
-                                echo "aucun date";
+                                echo "aucune date";
                               }
                               ?></h5>
                               	<h5 class="modal-title" id="devoir"><?php echo $donnees1['matiere']; ?></h5>
@@ -226,7 +173,7 @@ if (isset($ajout)) {
 					<div class="modal-dialog" role="document">
     					<div class="modal-content">
      						<div class="modal-header">
-        						<h5 class="modal-title" id="exampleModalLabel">Etes-vous sur de supprimer?</h5>
+        						<h5 class="modal-title" id="exampleModalLabel">êtes-vous sur de supprimer ?</h5>
         						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           						<span aria-hidden="true">&times;</span>
         						</button>
@@ -234,7 +181,7 @@ if (isset($ajout)) {
       						<div class="modal-footer">
 
 				        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				        		<a class="btn btn-outline-danger float-right" href="agendat-<?=$iduser?>=supprimer-<?= $donnees1['id'] ?>">Supprimer</a>
+				        		<a class="btn btn-outline-danger float-right" href="agenda-<?=$iduser?>=supprimer-<?= $donnees1['id'] ?>">Supprimer</a>
 
 				      		</div>
 				    	</div>
@@ -282,22 +229,7 @@ if (isset($ajout)) {
         <script>
     jQuery( function() {
 
-      jQuery( "#datepicker2" ).datepicker({
-        altField: "#datepicker",
-        closeText: 'Fermer',
-        prevText: 'Précédent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-        weekHeader: 'Sem',
-        dateFormat: 'yy-mm-dd',
-        showWeek: true,
-        firstDay: 1
-      });
+
               
     });
   </script>

@@ -3,11 +3,16 @@
 	margin: 0 auto;
 	margin-top: 250px;
 }
+body{
+    background: url(picture/font2.jpg);
+    background-position: center;
+}
 input[type="text"] {
 	width: 100%;
     margin: 0;
     background: 0;
     border: 0;
+    border-radius: 0px;
     outline: 0;
     border-bottom: 1px solid #FFFFFF;
     font-size: 12px;
@@ -25,6 +30,7 @@ input[type="password"] {
     margin: 0;
     background: 0;
     border: 0;
+    border-radius: 0px;
     outline: 0;
     border-bottom: 1px solid #FFFFFF;
     font-size: 12px;
@@ -35,18 +41,20 @@ input[type="password"] {
     outline: 0;
 
 }
-span[class="input-group-addon"]{
+span[class="input-group-text"]{
     margin: 0;
     background: 0;
     border: 0;
+    border-radius: 0px;
     outline: 0;
     color: #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
 }
 .col-6{
-    border: 1px solid;
+    border: 0px solid;
+    border-radius: 6px;
     padding: 50px 60px;
     -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-    box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    box-shadow: -1px 4px 120px 22px rgba(0,0,0,0.75);
 }
