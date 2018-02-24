@@ -1,12 +1,10 @@
 <?php
 		//auto-localisation http/https ou autre
-			if (preg_match('#([A-Za-z-/]+)/rout.php#', $_SERVER['SCRIPT_NAME'], $params)) {
-				$link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$params[1];			
-			} elseif (preg_match('#/rout.php#', $_SERVER['SCRIPT_NAME'])) {
-				$link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'];
+			if (!empty($_SERVER['HTTP_HOST']) AND !empty($_SERVER['REQUEST_URI'] AND !empty($_SERVER['REQUEST_SCHEME']))) {
+                $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$_SERVER['REQUEST_URI'];
 			} else {
-				echo "érreure lors de la localisation";			
-			}
+                echo "Ereure lors de la localisation (les variables SERVER['REQUEST_URI'] SERVER['HTTP_HOST'] n'existe pas )";
+            }
 		session_start();
 		//début première partie routeur
 			$url ='';

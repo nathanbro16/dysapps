@@ -1,16 +1,20 @@
-<?php session_start(); 
-
+<?php session_start();
+			if (!empty($_SERVER['HTTP_HOST']) AND !empty($_SERVER['REQUEST_URI'] AND !empty($_SERVER['REQUEST_SCHEME']))) {
+                $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$_SERVER['REQUEST_URI'];
+			} else {
+                echo "Ereure lors de la localisation (les variables SERVER['REQUEST_URI'] SERVER['HTTP_HOST'] n'existe pas )";
+            }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Installation</title>
-	<link rel="stylesheet" type="text/css" href="..\library\css\bootstrap.min.css">
-    <link rel="stylesheet" href="..\library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
-      <script src="../library/js/jquery-3.2.1.slim.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?=$link?>library/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?=$link?>library/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
+      <script src="<?=$link?>library/js/jquery-3.2.1.slim.min.js"></script>
   <script type="text/javascript">var jQuery_3_2_1 = $.noConflict();</script>
-  <script type="text/javascript" src="../library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
-  <script src="../library/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="<?=$link?>library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
+  <script src="<?=$link?>library/js/bootstrap.min.js"></script>
      <script type="text/javascript">
      	   jQuery_3_2_1(function(){   
      
@@ -31,7 +35,7 @@
 
 
 </head>
-<body style="background: url(../picture/font2.jpg);background-position: center;">
+<body style="background: url(<?=$link?>picture/font2.jpg);background-position: center;">
 <form method="POST" action="" class="form-inline" >
 	<div class="container">
 		<div ></div>
