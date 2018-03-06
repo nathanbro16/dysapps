@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Hello World !</title>
+             <script src="../library/js/jquery-3.2.1.slim.min.js"></script>
+
+        <script type="text/javascript">
+   $(function(){   
+   /* $('#all').bind('click', function(){
+        if($('input[name=marque]').is(':checked')){
+            $('input[type=button]').val('Sélectionner tout');
+        }else{
+            $('input[type=button]').val('Désélectionner tout');}
+            $('input[name=marque]').trigger('click');
+            return false;
+    });*/
+     
+    $('[name="marque"]').change(function()
+    {
+        var id = $(this).attr('id').substr(-1, 1);
+        var input = $('[type="text"]');
+        var inputState = input.attr('disabled') == "disabled";
+             
+        if(inputState){
+            input.attr('disabled', false);
+        } else {
+            input.attr('disabled', true);
+        }
+    });
+});</script>
+    </head>
+<body>
+        <h3>EFFECTUEZ VOS ACHATS</h3>
+        <form method="post" action="" id="form">
+            <table border="1">
+                <tr>
+                    <th>MARQUE</th>
+                    <th>QUANTITE</th>
+                </tr>
+                <tr>
+                        <td><input type="checkbox" name="marque" id="marque1" value="1"/>IPHONE 5S</td>
+                        <td><input type="text" name="qte1" id="qte1" autocomplete="off" disabled="disabled"/></td>
+                </tr>
+                <tr>
+                        <td><input type="checkbox" name="marque" id="marque2" value="2"/>NOKIA LUMIA 1020</td>
+                        <td><input type="mdp" name="qte2" id="qte2" autocomplete="off" disabled="disabled"/></td>
+                </tr>
+                <tr>
+                        <td><input type="checkbox" name="marque" id="marque3" value="3"/>SAMSUNG GALAXY S4</td>
+                        <td><input type="text" name="qte3" id="qte3" autocomplete="off" disabled="disabled"/></td>
+                </tr>
+                <tr>
+                        <td><input type="checkbox" name="marque" id="marque4" value="4"/>BLACKBERRY Q10</td>
+                        <td><input type="text" name="qte4" id="qte4" autocomplete="off" disabled="disabled"/></td>
+                </tr>
+            </table>
+            <br/>
+            <input type="button" id="all" value="Sélectionner tout"/>
+        </form>
+</body>
+</html><br><br>

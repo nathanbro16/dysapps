@@ -49,24 +49,24 @@
 	}
 
 ?>
-
+	<div align="center">
 		<h2>Inscription</h2>
 		<form method="POST" action="">
 
 					<label for="pseudo">Pseudo :</label>
 
 
-					<input type="texte" placeholder="Votre pseudo" id="pseudo" name="pseudo" value="<?php if(isset($pseudo)) { echo $pseudo; } ?>">	
+					<input type="texte" placeholder="Votre pseudo" class="form-control col-3" id="pseudo" name="pseudo" value="<?php if(isset($pseudo)) { echo $pseudo; } ?>">	
 
 					<label for="mdp">Mot de passe :</label>
 	
-					<input type="password" placeholder="Votre Mot de passe" id="mdp" name="mdp">
+					<input type="password" class="form-control col-3" placeholder="Votre Mot de passe" id="mdp" name="mdp">
 
 					<label for="mdp2">Confirmation du mot de passe :</label>
 
-					<input type="password" placeholder="confirmez votre mdp" id="mdp2" name="mdp2">	
+					<input type="password" class="form-control col-3" placeholder="confirmez votre mdp" id="mdp2" name="mdp2">	
 
-					<input type="submit" name="createcompte" value="Je m'inscris">
+					<input type="submit" class="btn btn-primary" name="createcompte" value="Je m'inscris">
 
 	</form>
 	<?php

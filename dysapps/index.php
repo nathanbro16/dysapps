@@ -1,3 +1,1 @@
-<?php
-include 'install/index.php';
-?>
+<?php include 'install/index.php';  ?>

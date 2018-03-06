@@ -15,16 +15,13 @@ if (isset($_POST['formconnextion']))
 			if ($userexist == 1) 
 			{
 				$userinfo = $requser->fetch();
-				$verif = $bdd->prepare("SELECT * FROM ".DB_prefix."membres WHERE pseudo= ?");
-				$verif->execute(array($userinfo['pseudo']));
-				if (substr_count($verif, ' ') <= 10) {
-
-						$chaine = trim($userinfo['pseudo']);
-						$chaine = str_replace(" ", "_", $chaine);
-						$_SESSION['urlpseudo'] = 'true';
-						$_SESSION['id'] = $userinfo['id'];
-						$_SESSION['pseudo'] = $userinfo['pseudo'];
-						header("Location: user-".$chaine);
+				if (substr_count($userinfo['pseudo'], ' ') <= 10) {
+					$chaine = trim($userinfo['pseudo']);
+					$chaine = preg_replace("# #", "_", $chaine);
+					$_SESSION['urlpseudo'] = 'true';
+					$_SESSION['id'] = $userinfo['id'];
+					$_SESSION['pseudo'] = $userinfo['pseudo'];
+					header("Location: user-".$chaine);
 				} else {
 					$_SESSION['urlpseudo'] = 'false';
 					$_SESSION['id'] = $userinfo['id'];
@@ -36,7 +33,6 @@ if (isset($_POST['formconnextion']))
 			{
 				$erreur="Maivais pseudo ou mot de passe !";
 				$_SESSION['erreur'] = $erreur;
-				echo $_SESSION['erreur'];
 				header('Location: connection');
 			}
 		}

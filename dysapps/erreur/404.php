@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
 	<title>404 Erreur</title>
-    <link rel="stylesheet" type="text/css" href="<?= $link ?>library/bootstrap-4.0.0-beta/scss/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= $link ?>library/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
+    <link rel="stylesheet" type="text/css" href="<?= $link ?>/library/bootstrap-4.0.0-beta/scss/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= $link ?>/library/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
     <style type="text/css">
       body{
         background: url(<?= $link ?>/picture/font2.jpg); 

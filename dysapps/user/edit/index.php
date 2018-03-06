@@ -14,56 +14,83 @@ if ($_SESSION['urlpseudo'] == 'true') {
 	<meta charset="utf-8">
 	<title>Paramètre utilisateur</title>
 
-	<link rel="stylesheet" href="../library/css/bootstrap.min.css">
-	<link rel="stylesheet" href="library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
+	<link rel="stylesheet" href="<?= $link ?>/library/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?= $link ?>/library/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
 
-	<script src="../library/js/jquery-3.2.1.slim.min.js"></script>
-  	<script type="text/javascript">var jQuery_3_2_1 = $.noConflict();</script>
-  	<script type="text/javascript" src="../library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
-  	<script src="../library/js/bootstrap.min.js"></script>
+	<script src="<?= $link ?>/library/js/jquery-3.3.1.min.js"></script>
+
+  	
+  	<script src="<?= $link ?>/library/js/bootstrap.min.js"></script>
 </head>
-<body style="background: url(../../../picture/font2.jpg);background-position: center;">
+<body style="background: url(<?= $link ?>/picture/font2.jpg);background-position: center;">
+	
+<script>
+$(document).ready(function() {
+});
+    function supprmatiere($id){
+ 
+    if(confirm('Confirmez vous la suppression ?')){
+        $.ajax({
+            //var datab = $('table td.id_actu').html();
+            //console.log(datab);
+ 
+            url : 'user/edit/traitement-matiere.php',
+            type : 'GET',
+            data : 'Matsup=' + $id,
+            success : function(data){
+            	if(data == 'ok'){
+                     $("#resultatspr").html('<div class="alert alert-success"><i class="fas fa-exclamation-triangle"></i>Votre matière a bien été supprimer. (actualiser pour la voir)</div>');
+                }
+                else{
+                     $("#resultatspr").html('<div class="alert alert-danger col-7"><i class="fas fa-exclamation-triangle"></i>Veuillez mettre une matiere.</div>');
+                }
+            },
+ 
+            error : function(resultat, statut, erreur){
+            },
+ 
+            complete : function(resultat, statut){
+ 
+            }
+ 
+        });
+    } else {
+        //ne change rien (comment l'indiquer ?)
+    }
+}
+</script>
+<script>
+$(document).ready(function(){
+    $("#ajout-matieres").click(function(e){
+        e.preventDefault();
+        $.post(
+            'user/edit/traitement-matiere.php', // Un script PHP que l'on va créer juste après
+            {
+                matiereajj : $("#matiere").val() 
+            },
+            function(data){
+                if(data == 'Success'){
+                     $("#resultatajout").html('<div class="alert alert-success"><i class="fas fa-exclamation-triangle"></i>Votre matière a bien été ajouter. (actualiser pour la voir)</div>');
+                }
+                else{
+                     $("#resultatajout").html('<div class="alert alert-danger col-7"><i class="fas fa-exclamation-triangle"></i>Veuillez mettre une matiere.</div>');
+                }
+            },
+            'text'
+         );
+    });
+    
+});
+</script>
 <form method="POST" action="">
-	<?php
-	if (!empty($ajout['matiere']) and $ajout['matiere'] == 'true') {
-        ?>
-          <script>
-            jQuery_3_2_1( function( document ) {
-              jQuery_3_2_1( '#ajout' ).modal('show');       
-            });
-          </script>
-          <div class="modal fade" id="ajout" tabindex="-1" role="dialog" aria-labelledby="devoir" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="ajoutlabel">Ajout d'une matière</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                </div>
-                <div class="modal-body">
-                  <?php if (!empty($erreurmat)) {
-                    echo '<div class="alert alert-danger col-7"><i class="fas fa-exclamation-triangle"></i> '.$erreurmat.'</div>';
-                  }?>
-                  <input type="text" name="matiere" placeholder="matière" class="form-control">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss='modal'>Annuler</button>
-                  <button type="submit" class="btn btn-primary" name="ajout-matieres">Valider</button>
-                </div>
-              </div>
-            </div>
-         </div>
-        <?php  
-        }
-        ?> 
+
 	<div class="container-fluid" >
 		<nav class="navbar navbar-expand-lg navbar-dark ">
 		  <a class="navbar-brand">Paramètre</a>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 	      <ul class="navbar-nav mr-auto">
 	        <li class="nav-item active">
-	          <a class="nav-link btn-outline-primary fa fa-home fa-2x" href="../user-<?= $urlpseudo ?>" ></a>
+	          <a class="nav-link btn-outline-primary fa fa-home fa-2x" href="user-<?= $urlpseudo ?>" ></a>
 	        </li>
 	      </ul>
 

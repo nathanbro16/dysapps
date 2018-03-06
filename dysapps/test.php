@@ -47,8 +47,9 @@
 				?><div class="alert alert-success col-sm"><?php
 
 					echo 'Connection base de donner : ' . OK ;
-					header('refresh:1;URL=connection');
-				?></div>
+				?>
+					<meta http-equiv="refresh" content="1 ; url=connection">
+				</div>
 					<div class="fa-3x">
 					  <i class="fas fa-sync fa-spin"></i>
 					</div>

@@ -1,11 +1,13 @@
 <?php
 		//auto-localisation http/https ou autre
-			if (!empty($_SERVER['HTTP_HOST']) AND !empty($_SERVER['REQUEST_URI'] AND !empty($_SERVER['REQUEST_SCHEME']))) {
-                $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$_SERVER['REQUEST_URI'];
+			if (preg_match('#([A-Za-z-/]+)/rout.php#', $_SERVER['SCRIPT_NAME'], $params)) {
+				$link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$params[1];			
+			} elseif (preg_match('#/rout.php#', $_SERVER['SCRIPT_NAME'])) {
+				$link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'];
 			} else {
-                echo "Ereure lors de la localisation (les variables SERVER['REQUEST_URI'] SERVER['HTTP_HOST'] n'existe pas )";
-            }
-		session_start();
+				echo "érreure lors de la localisation";			
+			}
+		
 		//début première partie routeur
 			$url ='';
 			if (isset($_GET['url'])) {
@@ -17,18 +19,20 @@
 			}
 			//instalation
 			elseif (preg_match('#install/url-Rewrite#', $url)) {
+				session_start();
 			
 				$_SESSION['veriferewite'] = sha1('PB2Vyq7qK439tmh2E');
 				echo "<script type='text/javascript'>document.location.replace('../?ins=3');</script>";
 			} elseif (preg_match('#url-Rewrite#', $url)) {
-			
+				session_start();
 				$_SESSION['veriferewite'] = sha1('PB2Vyq7qK439tmh2E');
 				echo "<script type='text/javascript'>document.location.replace('../?ins=3');</script>";
 			}
 		//début seconde partire routeur
 			require'sql.php';
 
-			if (preg_match('#user-([0-9A-Za-z-_]+)=Paramètre_profil=([A-Za-z-_]+)([0-9]+)#', $url, $params)) {
+			if (preg_match('#user-(.+)=Paramètre_profil=([A-Za-z-_]+)([0-9]+)#', $url, $params)) {
+				session_start();
 				$get = htmlspecialchars($params[1]);
 				if (ctype_digit($get)) {
 		  			if (!empty($_SESSION)) {
@@ -76,7 +80,8 @@
 			  			include 'erreur/acces.php';	
 			  		}
 				}
-		  	} elseif (preg_match('#user-([0-9A-Za-z-_]+)=Paramètre_profil#', $url, $params)) {
+		  	} elseif (preg_match('#user-(.+)=Paramètre_profil#', $url, $params)) {
+		  		session_start();
 				$get = htmlspecialchars($params[1]);
 				if (ctype_digit($get)) {
 		  			if (!empty($_SESSION)) {
@@ -109,7 +114,8 @@
 				}
 		  	}
 			// profil
-			elseif (preg_match('#user-([0-9A-Za-z-_]+)#', $url, $params)) {
+			elseif (preg_match('#user-(.+)#', $url, $params)) {
+				session_start();
 				$get = htmlspecialchars($params[1]);
 				if (ctype_digit($get)) {
 		  			if (!empty($_SESSION)) {
@@ -147,6 +153,7 @@
 			}
 			// agenda
 			elseif (preg_match('#user/agenda-([0-9]+)=supprimer-([0-9]+)#', $url, $params)) {
+				session_start();
 				if (!empty($_SESSION['id'])) {
 					if ($params[1] == $_SESSION['id']) {
 						$supprimer = $params[2];
@@ -157,6 +164,7 @@
 				} 
 
 			}elseif (preg_match('#user/agenda-([0-9]+)=ajout-([0-9]+)#', $url, $params)) {
+				session_start();
 				if (!empty($_SESSION['id'])) {
 					if ($params[1] == $_SESSION['id']) {
 						$ajout = $params[2];
@@ -168,6 +176,7 @@
 					include 'erreur/acces.php';
 				}
 			} elseif (preg_match('#user/agenda-([0-9]+)#', $url, $params)) {
+				session_start();
 				if (!empty($_SESSION['id'])) {
 					if ($params[1] == $_SESSION['id']) {
 						include 'user/agendat/index.php';

@@ -52,7 +52,7 @@ if (isset($idprofil) AND $idprofil > 0)
 	$resquser = $bdd->prepare("SELECT * FROM ".DB_prefix."membres WHERE id = ?");
 	$resquser->execute(array($getid));
 	$userinfo = $resquser->fetch();
-	header('refresh:180;URL= deconnections');
+  echo '<meta charset="utf-8" http-equiv="refresh" content="180 ; url=deconnection">';
 ?>
   <div id="h">
     <div class="logo">

@@ -46,25 +46,39 @@
             ?>
   </tbody>
 </table>
-<?php
-if (isset($_POST['ajout-matieres'])) {
-  if (!empty($_POST['matiere'])) {
-    $insert = $bdd->prepare("INSERT INTO ".DB_prefix."matiere(matiere, iduser) VALUES(?, ?) ");
-    $insert -> execute(array($_POST['matiere'], $_SESSION['id']));
-  }else{
-    $erreurmat = "Veuillez mettre une matière.";
-  }
-} 
-if (!empty($supprimer['matiere'])) {
- $iduser = $_SESSION['id'];
- $suprid = (int) $supprimer['matiere'];
- $del1 = $bdd->prepare("DELETE FROM ".DB_prefix."matiere WHERE id = $suprid");
- $del1->execute();
-}
 
-?>
+
+<div class="modal fade" id="ajout" tabindex="-1" role="dialog" aria-labelledby="devoir" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajoutlabel">Ajout d'une matière</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body">
+        <div id="resultatajout">
+          
+        </div>
+
+        <?php if (!empty($erreurmat)) {
+          echo '<div class="alert alert-danger col-7"><i class="fas fa-exclamation-triangle"></i> '.$erreurmat.'</div>';
+        }?>
+        <input type="text" id="matiere" placeholder="matière" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss='modal'>Annuler</button>
+        <button type="button" class="btn btn-primary" id="ajout-matieres">Valider</button>
+      </div>
+    </div>
+  </div>
+</div>
 <h1>Matière</h1>
-<table class="table  table-sm">
+<div id="resultatspr">
+  
+</div>
+<table class="table  table-sm" id="matiere">
   <thead class="table-info">
                   <tr>
                     <th>#</th>
@@ -81,7 +95,7 @@ if (!empty($supprimer['matiere'])) {
                       while ($donnees1 = $reponse1->fetch())
                       {
                         ?><tr>
-                            <td><?= $donnees1[0] ?> <a class="btn btn-danger btn-sm" href="user-<?=$urlpseudo?>=Paramètre_profil=supprimer_matiere-<?= $donnees1['id'] ?>" >suppr</a></td>
+                            <td><?= $donnees1[0] ?> <button type="button" id="<?= $donnees1['id'] ?>" class="btn btn-danger btn-sm" id="supr-matieres" onclick="supprmatiere(<?= $donnees1['id'] ?>);" >suppr</button></td>
                             <td><?= $donnees1['matiere'] ?></td> 
                           </tr><?php
                       }
@@ -89,7 +103,7 @@ if (!empty($supprimer['matiere'])) {
                       ?>
                       <tr>
                         <td></td>
-                        <td><a class="btn btn-success fas fa-plus" href="user-<?=$urlpseudo?>=Paramètre_profil=ajout_matiere-1" role="button"></a></td>
+                        <td><a class="btn btn-success fas fa-plus" data-toggle="modal" data-target="#ajout" href="" role="button"></a></td>
                       </tr>
                  
               </tbody>

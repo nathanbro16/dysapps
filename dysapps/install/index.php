@@ -1,20 +1,38 @@
-<?php session_start();
-			if (!empty($_SERVER['HTTP_HOST']) AND !empty($_SERVER['REQUEST_URI'] AND !empty($_SERVER['REQUEST_SCHEME']))) {
-                $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$_SERVER['REQUEST_URI'];
-			} else {
-                echo "Ereure lors de la localisation (les variables SERVER['REQUEST_URI'] SERVER['HTTP_HOST'] n'existe pas )";
-            }
+<?php session_start(); 
+if (isset($_POST['FIN'])) {
+	$texte = "<?php include 'test.php';  ?>";
+
+		$fichier = '../index.php';
+		// on vérifie s'il est possible d'ouvrir le fichier
+
+		if(!$ouvrir = fopen($fichier, 'w')) {
+
+		exit('Impossible d\'ouvrir le fichier : <strong>'. $fichier .'</strong>.'. RETOUR);
+
+		}
+
+
+		// s'il est possible d'écrire dans le fichier alors on ne se gêne pas
+
+		if(fwrite($ouvrir, $texte) == FALSE) {
+
+		exit('Impossible d\'écrire dans le fichier : <strong>'. $fichier .'</strong>.'. RETOUR);
+
+		}
+		header("Location: ../");
+}
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Installation</title>
-	<link rel="stylesheet" type="text/css" href="<?=$link?>library/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?=$link?>library/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
-      <script src="<?=$link?>library/js/jquery-3.2.1.slim.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\library\css\bootstrap.min.css">
+    <link rel="stylesheet" href="..\library\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.css">
+      <script src="../library/js/jquery-3.2.1.slim.min.js"></script>
   <script type="text/javascript">var jQuery_3_2_1 = $.noConflict();</script>
-  <script type="text/javascript" src="<?=$link?>library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
-  <script src="<?=$link?>library/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../library/js/popper.js-1.12.8/dist/dist/umd/popper.min.js"></script>
+  <script src="../library/js/bootstrap.min.js"></script>
      <script type="text/javascript">
      	   jQuery_3_2_1(function(){   
      
@@ -35,7 +53,7 @@
 
 
 </head>
-<body style="background: url(<?=$link?>picture/font2.jpg);background-position: center;">
+<body style="background: url(../picture/font2.jpg);background-position: center;">
 <form method="POST" action="" class="form-inline" >
 	<div class="container">
 		<div ></div>
@@ -119,34 +137,51 @@ if (!empty($_GET)) {
 							  	<?php if (!empty($ErreurDB)) {
 							  		echo '<div class="alert alert-danger col-7"><i class="fas fa-exclamation-triangle"></i>'.$ErreurDB.'</div>';
 							  	}?>
-							  <div class="lead col-4">
-						  	      <div class="custom-control custom-checkbox mr-sm-2">
+							  <div class="lead">
+						  	      <div class="custom-control custom-checkbox col-3">
 							        <input type="checkbox" class="custom-control-input" id="default" name="default">
 							        <label class="custom-control-label" for="default">Par défaut</label>
 							      </div>
+							      <hr>
 
-							  	<div class="form-group">
-							  		<label for="DBadresse">Address du server Mysql</label>
+							  	<div>
+							  		<div class="row">
+							  			<label for="DBadresse"><i class="fas fa-arrow-right"></i>Address du server Mysql</label>
+							    	</div>
 							    	<input type="text" class="form-control" id="DBadresse" name="DBadresse" placeholder="Par défaut localhost">
 							    </div>
-							    <div class="form-group">
-							    	<label for="DBuser">Nom d'utilisateur mysql</label>
+							    <div>
+							    	<div class="row">
+							    		<label for="DBuser"><i class="fas fa-arrow-right"></i>Nom d'utilisateur mysql</label>
+							    	</div>
 							    	<input type="text" class="form-control" id="DBuser" name="DBuser" placeholder="Par défaut root">
 							    </div>
-							    <div class="form-group">
-							    	<label for="DBmdp">Mot de passe de mysql</label>	
+							    <div>
+							    	<div class="row">
+							    		<label for="DBmdp"><i class="fas fa-arrow-right"></i>Mot de passe de mysql</label>	
+							    	</div>
 							    	<input type="password" class="form-control" id="DBmdp" name="DBmdp" placeholder="Par défaut rien">
 							    </div>
-							    <div class="form-group">
-							    	<label for="DBname">Nom de la basse de donnée</label>	
+							    <div >
+							    	<div class="row">
+							    		<label for="DBname"><i class="fas fa-arrow-right"></i>Nom de la basse de donnée</label>	
+							    	</div>
 							    	<input type="text" class="form-control" id="DBname" name="DBname" placeholder="Par défaut dysapps">
 							    </div>
-							    <div class="form-group">
-							    	<label for="DBprefix">Préfix avant la table </label>
-							    	<input type="text" class="form-control" id="DBprefix" name="DBprefix" placeholder="Par défaut DY_">
+							    <div>
+							    	<div class="row">
+							    		<label for="DBprefix"><i class="fas fa-arrow-right"></i>Préfix avant la table </label>
+							    	</div>
+							    	<div class="input-group">
+										<input type="text" class="form-control col-md-2" id="DBprefix" name="DBprefix" placeholder="Par défaut DY_">
+									  	<div class="input-group-append">
+									    	<span class="input-group-text">_</span>
+									  	</div>
+									</div>
+							    	
 							    </div>
-							    <div class="form-group">
-							    	<input type="submit" class="btn btn-primary" name="validDB" value="se connecter">
+							    <div class="">
+							    	<input type="submit" class="btn btn-primary btn-block" name="validDB" value="se connecter">
 							    </div>
 							  </div>
 							</div>
@@ -286,7 +321,7 @@ if (!empty($_GET)) {
 				<p class="lead">Cliquer tout de suite sur le lien qui vous emeneras pour vous connectez a votre interface.</p>
 				<hr class="my-4">
 				<p class="lead">
-					<a class="btn btn-primary btn-lg" href="../index.php" role="button">Se connecter</a>
+					<input type="submit" name="FIN" class="btn btn-primary" value="Se connectez">
 				</p>
 			</div>
 			<?php
